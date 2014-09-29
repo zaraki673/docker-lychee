@@ -12,7 +12,6 @@ RUN apt-get install -yq wget git unzip nginx fontconfig-config fonts-dejavu-core
     php5-fpm php5-common php5-json php5-cli php5-common php5-mysql\
     php5-gd php5-json php5-mcrypt php5-readline psmisc ssl-cert \
     ufw php-pear libgd-tools libmcrypt-dev mcrypt mysql-server mysql-client
-RUN update-rc.d php5-fpm defaults
 
 # ------------------------------------------------------------------------------
 # Configure mysql
@@ -47,6 +46,10 @@ ADD conf/lychee /etc/nginx/sites-enabled/
 # Install Lychee
 WORKDIR /var/www
 RUN git clone https://github.com/electerious/Lychee.git lychee
+RUN chown -R www-data:www-data /var/www/lychee
+RUN chmod -R 770 /var/www/lychee
+RUN chmod -R 777 /var/www/lychee/uploads/ 
+RUN chmod -R 777 /var/www/lychee/data/
 
 # ------------------------------------------------------------------------------
 # Expose ports.
@@ -54,13 +57,12 @@ EXPOSE 80
 
 # ------------------------------------------------------------------------------
 # Expose volumes
-VOLUME /var/www/lychee/uploads/
-VOLUME /var/www/lychee/data/
+WORKDIR /
+RUN ln -s /var/www/lychee/uploads uploads 
+RUN ln -s /var/www/lychee/data data
 
-RUN chown -R www-data:www-data /var/www/lychee
-RUN chmod -R 770 /var/www/lychee
-RUN chmod -R 777 /var/www/lychee/uploads/ 
-RUN chmod -R 777 /var/www/lychee/data/
+VOLUME /uploads
+VOLUME /data
 
 # ------------------------------------------------------------------------------
 # Add supervisord conf
