@@ -28,6 +28,8 @@ RUN sed -i -e "s/output_buffering\s*=\s*4096/output_buffering = Off/g" /etc/php5
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 1G/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 1G/g" /etc/php5/fpm/php.ini
+RUN sed -i -e "s:;\s*session.save_path\s*=\s*\"N;/path\":session.save_path = /tmp:g" /etc/php5/fpm/php.ini
+RUN chown -R www-data:www-data /tmp
 RUN php5enmod mcrypt
 
 # ------------------------------------------------------------------------------
