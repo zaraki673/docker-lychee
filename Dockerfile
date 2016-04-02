@@ -2,8 +2,8 @@
 # Based on a work at https://github.com/docker/docker.
 # ------------------------------------------------------------------------------
 # Pull base image.
-FROM kdelfour/supervisor-docker
-MAINTAINER Kevin Delfour <kevin@delfour.eu>
+FROM zaraki673/docker-supervisord
+MAINTAINER Kevin larsonneur  <azazel673@gmail.com>
 
 # ------------------------------------------------------------------------------
 # Install base
